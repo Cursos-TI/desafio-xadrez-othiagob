@@ -1,70 +1,118 @@
+#include <stdbool.h> // Tive que incluir por que no CLion apresentou que era necessário.
 #include <stdio.h>
 
-// Desafio de Xadrez - MateCheck
-// Este código inicial serve como base para o desenvolvimento do sistema de movimentação das peças de xadrez.
-// O objetivo é utilizar estruturas de repetição e funções para determinar os limites de movimentação dentro do jogo.
+
+void moverTorre(int casas, int contador) {
+
+    if (contador >= casas) {
+        return;
+    }
+
+    printf("Direita!\n");
+
+    moverTorre(casas, contador + 1);
+}
+
+void moverBispo(int casas, int contador) {
+
+    if (contador >= casas) {
+        return;
+    }
+
+    printf("Cima e Direita\n");
+
+
+    moverBispo(casas, contador + 1);
+}
+
+
+void moverRainha(int casas, int contador) {
+
+    if (contador >= casas) {
+        return;
+    }
+
+    printf("Esquerda\n");
+
+ 
+    moverRainha(casas, contador + 1);
+}
+
+
+void moverBispoLoops(int casas) {
+    printf("Movimento do BISPO:\n");
+
+ 
+    for (int vertical = 0; vertical < casas; vertical++) {
+      
+        for (int horizontal = 0; horizontal < 1; horizontal++) {
+            printf("Cima e Direita (vertical: %d, horizontal: %d)\n", vertical + 1, horizontal + 1);
+        }
+    }
+}
 
 int main() {
-    // Nível Novato - Movimentação das Peças
-    // Sugestão: Declare variáveis constantes para representar o número de casas que cada peça pode se mover.
+
     const int TORRE_CASAS = 5;    // 5 casas para a direita
     const int BISPO_CASAS = 5;    // 5 casas diagonal cima e direita
     const int RAINHA_CASAS = 8;   // 8 casas para a esquerda
 
-    // Implementação de Movimentação do Bispo
-    // Sugestão: Utilize uma estrutura de repetição para simular a movimentação do Bispo em diagonal.
-    printf("Movimento do BISPO:\n");
-    int contador_bispo = 0;
-    while(contador_bispo <= BISPO_CASAS){
-        printf("Cima e Direita\n");
-        contador_bispo++;
-    }
 
-    // Implementação de Movimentação da Torre
-    // Sugestão: Utilize uma estrutura de repetição para simular a movimentação da Torre para a direita.
-    printf("Movimento da Torre: \n");
-    for(int i = 1; i <= TORRE_CASAS; i++){
-        printf("Direita!\n");
-    }
+    printf("Movimento do BISPO (recursivo):\n");
+    moverBispo(BISPO_CASAS, 0);
     printf("\n");
 
-    // Implementação de Movimentação da Rainha
-    // Sugestão: Utilize uma estrutura de repetição para simular a movimentação da Rainha para a esquerda.
-    printf("Movimento da Rainha:\n");
-    int contador_rainha = 0;
-    do{
-        printf("Esquerda\n");
-        contador_rainha++;
-    }while(contador_rainha < RAINHA_CASAS);
+    printf("Movimento da Torre (recursivo): \n");
+    moverTorre(TORRE_CASAS, 0);
+    printf("\n");
 
-    // Nível Aventureiro - Movimentação do Cavalo
-    // Sugestão: Utilize loops aninhados para simular a movimentação do Cavalo em L.
-    // Um loop pode representar a movimentação horizontal e outro vertical.
+    
+    printf("Movimento da Rainha (recursivo):\n");
+    moverRainha(RAINHA_CASAS, 0);
+    printf("\n");
 
-     // Definindo o número de passos para o movimento do Cavalo
-     const int passos_baixo = 2;
-     const int passos_esquerda = 1;
- 
-     // Loop aninhado para o movimento do Cavalo
-     for (int i = 0; i < passos_baixo; i++) {
-         printf("Baixo\n");
-         
-         // Após o segundo movimento para baixo, realiza o movimento para a esquerda
-         if (i == passos_baixo - 1) {
-             int j = 0;
-             while (j < passos_esquerda) {
-                 printf("Esquerda\n");
-                 j++;
-             }
-         }
-     }
 
-    // Nível Mestre - Funções Recursivas e Loops Aninhados
-    // Sugestão: Substitua as movimentações das peças por funções recursivas.
-    // Exemplo: Crie uma função recursiva para o movimento do Bispo.
+    moverBispoLoops(BISPO_CASAS);
+    printf("\n");
 
-    // Sugestão: Implemente a movimentação do Cavalo utilizando loops com variáveis múltiplas e condições avançadas.
-    // Inclua o uso de continue e break dentro dos loops.
+  
+    printf("Movimento do CAVALO (aprimorado):\n");
+
+    
+    const int passos_cima = 2;
+    const int passos_direita = 1;
+
+   
+    int i = 0, j = 0;
+    bool movimentoCompleto = false;
+
+    
+    for (i = 0, j = 0; i <= passos_cima && !movimentoCompleto; i++) {
+        // Movimento para cima
+        if (i < passos_cima) {
+            printf("Cima\n");
+            continue; 
+        }
+
+        
+        for (j = 0; j < passos_direita; j++) {
+            printf("Direita\n");
+
+            
+            if (j == passos_direita - 1) {
+                movimentoCompleto = true;
+                break; 
+            }
+        }
+    }
+
+    printf("\n");
 
     return 0;
 }
+
+/*
+Houve um auxilio de inteligencia artificil para conclusão final do código. 
+No entanto, o que foi extraido da IA foi alguns conceitos e formas corretas de implementar as funções recursivas.
+E também a identação, precisei de ajudar para organizar meu código para entender melhor quais os padrões que preciso seguir.
+*/ 
